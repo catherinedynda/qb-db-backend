@@ -8,6 +8,8 @@ Currently only has setup scripts & stuff.
 
 - [ ] Recreate code for getting members
   - [ ] Make it able to be optionally used?
+- [ ] Make the API stuff
+- [ ] Make other admin tools? Like for checking on new quotes that have been added
 
 ## File structure
 
