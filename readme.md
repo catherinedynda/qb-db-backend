@@ -25,7 +25,7 @@ If you want to test the databse connection, run `node dbTest.js`. If it works, i
 
 ## Database Setup Notes
 
-Some manual work may need to be done to re-add members who have since left/been removed from the group. Just find a message where they are and plug in the info manually, or add them to the members JSON if you feel so inclined. (This is needed for Katrina at least.)
+Some manual work may need to be done to re-add members who have since left/been removed from the group. Just find a message where they are and plug in the info manually, or add them to the members JSON if you feel so inclined.
 
 ## Environment Variables
 
@@ -68,6 +68,8 @@ This table holds the actual quotes.
 **`quote_id: `** Primary key, unique identifier of each quote message. Provided by GroupMe (so long).
 
 **`member_id: `** Id of the member who sent the quote message, foreign key connecting to **Member** table.
+
+**`member_name: `** Display name of member at time of quote; for display purposes.
 
 **`quote_text: `** The full raw text of the quote.
 

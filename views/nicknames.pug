@@ -1,0 +1,57 @@
+extends layout
+
+//- - function addQuotee() { alert("heemo time!") }
+
+block content
+    a(href='/index') Home
+    h1= title
+    p Welcome to nickname fixer
+    script.
+        function showField(nickname_id) {
+            let div = document.getElementById(`add-quotee-${nickname_id}-div`);
+            div.style = '';
+        }
+
+        async function addQuotee(nickname_id) {
+            let div = document.getElementById(`add-quotee-${nickname_id}-div`);
+            div.style = 'display:none;';
+            let name = document.getElementById('quotee-name');
+            name = name.value;
+            console.log(`new quotee name: ${name}`);
+            let select = document.getElementById('quotee-select');
+            let option = document.createElement('option');
+            option.value = -1;
+            option.innerHTML = name;
+            select.appendChild(option);
+            //- const results = await client.query('SELECT * FROM qb."Member" LIMIT 3');
+            //- console.log(results);
+        }
+    form(action='/nicknames', method='post')
+        each field in fields
+            input(type='hidden', name='nickname_id', value=field.nickname_id)
+            label(for='nickname')
+                p <strong>Nickname:</strong> #{field.nickname}  
+            label(for='quote_text')
+                p <strong>Quote:</strong> #{field.quote_text}
+            input(type='hidden', name='quote_text', value=field.quote_text)
+            input(type='hidden', name='quote_id', value=field.quote_id)
+            input(type='hidden', name='nickname', value=field.nickname)
+            label(for='person_id') <strong>Quotee to match with</strong>  
+            select(name='person_id' id='quotee-select')
+                option(value=null id='null-option')
+                each name in names
+                    option(value=name.person_id) #{name.name}
+            button(type='button'  onclick='showField('+field.nickname_id+')') + Add quotee
+            div(class='hidden', style='display:none;' id='add-quotee-'+field.nickname_id+'-div')
+                    label(for='quotee_name') <strong> Quotee name:</strong> 
+                    input(type='text' name='quotee_name' id='quotee-name')
+                    - let addQuoteeString = `addQuotee(${field.nickname_id})`
+                    button(type='button' onclick=addQuoteeString) Add
+            br
+            input(type='checkbox' name='no-associate')
+            label(for='no-associate') Don't associate nickname with quote
+            br
+            input(type='checkbox' name='delete-quote')
+            label(for='delete-quote') X Delete quote
+            br
+        input(type='submit', value="Submit")

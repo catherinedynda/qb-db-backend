@@ -13,4 +13,4 @@ import exportScript from "./exportScript.js";
 // buildMemberList().then(
 //   buildNicknameList().then(exportScript().then(console.log("export finished!")))
 // );
-await exportScript();
+// await exportScript();
