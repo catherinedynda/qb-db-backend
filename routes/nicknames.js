@@ -12,7 +12,7 @@ async function updateDB(data, client) {
     // use an imported delete function, there's probably several things to follow up on
     console.log("delete quote");
     console.log(`quote_id: ${data.quote_id}`);
-    // await deleteQuote(data.quote_id, client);
+    await deleteQuote(data.quote_id, client);
   }
 
   // now we fix the person id
@@ -85,12 +85,11 @@ router.get("/", async function (req, res, next) {
   console.log(fields);
   names = await client.query('SELECT person_id, name FROM qb."Quotee"');
   names = names.rows;
-  //   client.end();
+  client.end();
   res.render("nicknames", {
     title: "Nicknames",
     fields: fields,
     names: names,
-    client: client,
   });
 });
 
@@ -101,12 +100,11 @@ router.post("/", urlencodedParser, async function (req, res) {
   fields = fields.rows;
   names = await client.query('SELECT person_id, name FROM qb."Quotee"');
   names = names.rows;
-  //   client.end();
+  client.end();
   res.render("nicknames", {
     title: "Nicknames",
     fields: fields,
     names: names,
-    client: client,
   });
 });
 

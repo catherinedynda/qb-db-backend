@@ -23,19 +23,20 @@ block content
             option.value = -1;
             option.innerHTML = name;
             select.appendChild(option);
-            //- const results = await client.query('SELECT * FROM qb."Member" LIMIT 3');
-            //- console.log(results);
+            option.selected = true;
         }
     form(action='/nicknames', method='post')
         each field in fields
             input(type='hidden', name='nickname_id', value=field.nickname_id)
             label(for='nickname')
                 p <strong>Nickname:</strong> #{field.nickname}  
+            input(type='hidden', name='nickname', value=field.nickname)
+            //- details(style='display:none;' id='search-results')
+            //-     summary Search results
             label(for='quote_text')
                 p <strong>Quote:</strong> #{field.quote_text}
             input(type='hidden', name='quote_text', value=field.quote_text)
             input(type='hidden', name='quote_id', value=field.quote_id)
-            input(type='hidden', name='nickname', value=field.nickname)
             label(for='person_id') <strong>Quotee to match with</strong>  
             select(name='person_id' id='quotee-select')
                 option(value=null id='null-option')
@@ -48,13 +49,13 @@ block content
                     - let addQuoteeString = `addQuotee(${field.nickname_id})`
                     button(type='button' onclick=addQuoteeString) Add
             br
-            input(type='checkbox' name='add-verbatim')
+            input(type='checkbox' name='add-verbatim' id='add-verbatim')
             label(for='add-verbatim') Add name verbatim
             br
-            input(type='checkbox' name='no-associate')
+            input(type='checkbox' name='no-associate' id='no-associate')
             label(for='no-associate') Don't associate nickname with quote
             br
-            input(type='checkbox' name='delete-quote')
+            input(type='checkbox' name='delete-quote' id='delete-quote')
             label(for='delete-quote') X Delete quote
             br
         input(type='submit', value="Submit")
