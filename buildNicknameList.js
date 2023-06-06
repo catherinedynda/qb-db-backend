@@ -13,9 +13,13 @@ async function buildNicknameList() {
   // so...not great
   const writeStreamNames = fs.createWriteStream("data/nicknames.txt");
   const writeStreamIds = fs.createWriteStream("data/nickname_ids.txt");
+  const writeStreamPersonIds = fs.createWriteStream(
+    "data/nickname_person_ids.txt"
+  );
   members.rows.forEach((row) => {
     writeStreamNames.write(`${row.nickname}\n`);
     writeStreamIds.write(`${row.nickname_id}\n`);
+    writeStreamPersonIds.write(`${row.person_id}\n`);
   });
   // the finish event is emitted when all data has been flushed from the stream
   writeStreamNames.on("finish", () => {
@@ -25,6 +29,9 @@ async function buildNicknameList() {
   writeStreamIds.on("finish", () => {
     console.log("wrote array data to file");
   });
+  writeStreamPersonIds.on("finish", () => {
+    console.log("wrote person ids to file");
+  });
 
   // handle the errors on the write process
   writeStreamNames.on("error", (err) => {
@@ -33,10 +40,14 @@ async function buildNicknameList() {
   writeStreamIds.on("error", (err) => {
     console.error(`There is an error writing the file => ${err}`);
   });
+  writeStreamPersonIds.on("error", (err) => {
+    console.error(`There is an error writing person ids to file => ${err}`);
+  });
 
   // close the stream
   writeStreamNames.end();
   writeStreamIds.end();
+  writeStreamPersonIds.end();
 
   client.end();
 }

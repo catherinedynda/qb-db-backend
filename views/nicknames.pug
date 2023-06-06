@@ -48,6 +48,9 @@ block content
                     - let addQuoteeString = `addQuotee(${field.nickname_id})`
                     button(type='button' onclick=addQuoteeString) Add
             br
+            input(type='checkbox' name='add-verbatim')
+            label(for='add-verbatim') Add name verbatim
+            br
             input(type='checkbox' name='no-associate')
             label(for='no-associate') Don't associate nickname with quote
             br

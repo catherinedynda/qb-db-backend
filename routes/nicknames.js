@@ -36,6 +36,22 @@ async function updateDB(data, client) {
     }
   }
 
+  if (data["add-verbatim"]) {
+    console.log("adding person verbatim");
+    try {
+      await client.query('INSERT INTO qb."Quotee" (name) VALUES ($1)', [
+        data.nickname,
+      ]);
+      let person = await client.query(
+        'SELECT person_id FROM qb."Quotee" WHERE name = $1',
+        [data.nickname]
+      );
+      person_id = person.rows[0].person_id;
+    } catch (e) {
+      console.log(`Error inserting new quotee and getting their id: ${e}`);
+    }
+  }
+
   // now we update the nickname association
   if (data["no-associate"]) console.log("no-associate on");
   else {
@@ -52,7 +68,7 @@ async function updateDB(data, client) {
   // now we update the quote and quotee association
   try {
     await client.query(
-      'UPDATE qb."Quote_Quotee" SET quote_id = $1, person_id = $2',
+      'INSERT INTO qb."Quote_Quotee" (quote_id, person_id) VALUES ($1, $2)',
       [data.quote_id, person_id]
     );
   } catch (e) {

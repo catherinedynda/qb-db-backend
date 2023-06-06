@@ -21,7 +21,13 @@ If you need to create initial members or update members, run `node getMembersFro
 
 Run `node index.js` once the members are in the database. (This may require there being nicknames in the database, it may not. There should at least be the table for nickames in the database.) This will create CSVs in the `data/` subdirectory, which can then be used to insert data into the database. It may also create some little text files, used for the classic "lined-up lists" method.
 
-If you want to test the databse connection, run `node dbTest.js`. If it works, it should output a user.
+If you want to test the database connection, run `node dbTest.js`. Can't promise what's in there at any given time, useful for testing queries & stuff.
+
+After giving nicknames a `person_id` but not necessarily having directly connected them to quotes, try running `nicknamesToQuotes.js` to fill up the `Quote_Quotee` table. This may take a bit to run. It may take less time to run with `console.log` statements taken out. It'll probably run into a bunch of errors with duplicate insertions, but that's fine, it's just finding entries that are already there. Don't worry about it.
+
+For fixing nicknames (either the first time or as a general maintenance thing), run the admin app (`node app.js`, or `nodemon app.js` if you're making changes to source code and want it to reload), go to the fix nicknames page, and fill out the form as appropriate. (After hitting add quotee and adding a name, it will be at the bottom of the list. You can type to search the dropdown as well.)
+
+![](images/nickname_fixer.jpg)
 
 ## Database Setup Notes
 
