@@ -11,6 +11,8 @@ import path from "path";
 import indexRouter from "./routes/index.js";
 import nicknamesRouter from "./routes/nicknames.js";
 import usersRouter from "./routes/users.js";
+import membersRouter from "./routes/members.js";
+import quoteesRouter from "./routes/quotees.js";
 
 const app = express();
 const port = 4000;
@@ -24,6 +26,8 @@ app.set("view engine", "pug");
 app.use("/", indexRouter);
 app.use("/nicknames", nicknamesRouter);
 app.use("/users", usersRouter);
+app.use("/members", membersRouter);
+app.use("/quotees", quoteesRouter);
 
 app.use(express.static("/public"));
 
@@ -39,17 +43,17 @@ app.use(express.static("/public"));
 
 // error handler
 app.use(function (err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  // res.locals.error = req.app.get("env") === "development" ? err : {};
+    // set locals, only providing error in development
+    res.locals.message = err.message;
+    // res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
+    // render the error page
+    res.status(err.status || 500);
+    res.render("error");
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+    console.log(`Example app listening on port ${port}`);
 });
 
 // module.exports = app;
