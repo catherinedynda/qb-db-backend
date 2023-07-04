@@ -1,4 +1,5 @@
 import pkg from "pg";
+import knex from "knex";
 const { Client } = pkg;
 import dotenv from "dotenv";
 dotenv.config();
@@ -29,6 +30,20 @@ const createClient = async () => {
     return client;
 };
 
+const createKnex = async () => {
+    const knexClient = knex({
+        client: "pg",
+        connection: {
+            host: process.env.DB_HOST,
+            user: process.env.DB_USER,
+            database: process.env.DB_DATABASE,
+            password: process.env.DB_PWD,
+        },
+    });
+
+    return knexClient;
+};
+
 // safely deletes a quote and associated items
 const deleteQuote = async (quote_id, client) => {
     try {
@@ -51,4 +66,4 @@ const deleteQuote = async (quote_id, client) => {
     }
 };
 
-export { createClient, deleteQuote };
+export { createClient, createKnex, deleteQuote };

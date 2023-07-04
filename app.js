@@ -13,6 +13,7 @@ import nicknamesRouter from "./routes/nicknames.js";
 import usersRouter from "./routes/users.js";
 import membersRouter from "./routes/members.js";
 import quoteesRouter from "./routes/quotees.js";
+import searchRouter from "./routes/search.js";
 
 const app = express();
 const port = 4000;
@@ -28,6 +29,7 @@ app.use("/nicknames", nicknamesRouter);
 app.use("/users", usersRouter);
 app.use("/members", membersRouter);
 app.use("/quotees", quoteesRouter);
+app.use("/search", searchRouter);
 
 app.use(express.static("/public"));
 
