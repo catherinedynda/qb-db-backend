@@ -1,15 +1,32 @@
 # Quote Board Database - Setup & Admin
 
-Consists of two sections: asstd. setup scripts & info, and an app that runs admin stuff (updating from GroupMe).
+Consists of two sections: asstd. setup scripts & info, and an app that runs admin stuff (updating from GroupMe, maintaining API for frontend).
 
-Currently only has setup scripts & stuff.
+Setup scripts are a bit of a mess, admin app is in progress.
 
 ## TODO
 
-- [ ] Recreate code for getting members
-  - [ ] Make it able to be optionally used?
-- [ ] Make the API stuff
-- [ ] Make other admin tools? Like for checking on new quotes that have been added
+-   [ ] Recreate code for getting members
+    -   [ ] Make it able to be optionally used?
+-   [ ] Make the API stuff
+    -   [ ] Add custom column select, we really don't need all of these
+-   [ ] Make other admin tools? Like for checking on new quotes that have been added
+-   [ ] Honestly switch DB provider the connections thing is annoying
+    -   [ ] Make it not immediately die if there's too many database connections? This is untenable for more production-level stuff
+
+## API
+
+`GET /members`: Returns list of members. Currently only member id and name.
+
+`GET /quotees`: Returns list of quotees. Currently only id and name.
+
+`GET /search`: Main endpoint for searching. Returns quotes and stuff. Parameters:
+
+-   `keyword`: case insensitive keyword to search for in full text of quote
+-   `member`: id of member quote is from
+-   `quotee`: id of person quoted
+
+More to come. All parameters currently function on an AND basis. Deal with it.
 
 ## File structure
 

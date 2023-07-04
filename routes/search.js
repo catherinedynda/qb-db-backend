@@ -30,7 +30,13 @@ router.get("/", urlencodedParser, async function (req, res) {
             )
             .where("Quotee.person_id", req.query.quotee);
     }
-    const quotes = await query.select();
+    query = query.innerJoin(
+        "Member",
+        "Quote.member_id",
+        "=",
+        "Member.member_id"
+    );
+    const quotes = await query.select().limit(10);
     await knex.destroy();
     res.set("Access-Control-Allow-Origin", "http://localhost:3000");
     // res.send(["heemo time"]);
