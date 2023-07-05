@@ -11,8 +11,14 @@ Setup scripts are a bit of a mess, admin app is in progress.
 -   [ ] Make the API stuff
     -   [ ] Add custom column select, we really don't need all of these
 -   [ ] Make other admin tools? Like for checking on new quotes that have been added
--   [ ] Honestly switch DB provider the connections thing is annoying
+    -   [ ] Check on new quotes, paginated with LIMIT and OFFSET? Or do this for any tables...?
+-   [x] Honestly switch DB provider the connections thing is annoying
     -   [ ] Make it not immediately die if there's too many database connections? This is untenable for more production-level stuff
+    -   [ ] Have just one connection passed around instead of multiple
+-   [ ] Just switch everything to Knex? Weird to have two things bumping around
+-   [ ] Add GroupMe API? but also it's not super active now sooo...
+    -   [ ] And if so, probably still needs regular updates for like, likes info
+    -   [ ] make sure that when new updates are run on the db, like when you extract stuff from files, it gets likes and everything?
 
 ## API
 

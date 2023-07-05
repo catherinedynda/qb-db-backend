@@ -5,6 +5,7 @@ const urlencodedParser = bodyParser.urlencoded({ extended: false });
 import { createKnex } from "../db.js";
 
 router.get("/", urlencodedParser, async function (req, res) {
+    // TODO: list of things to select that gets added to with each query piece?
     const knex = await createKnex();
     console.log(req.query);
     let query = knex.withSchema("qb").from("Quote");

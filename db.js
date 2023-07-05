@@ -8,12 +8,8 @@ dotenv.config();
 // so there isn't any chance of the frontend messing things up
 
 const createClient = async () => {
-    const client = new Client({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        database: process.env.DB_DATABASE,
-        password: process.env.DB_PWD,
-    });
+    const connectionString = process.env.CONNECTION_STRING;
+    const client = new Client({ connectionString });
 
     let count = 0;
     while (count < 5) {
@@ -33,12 +29,7 @@ const createClient = async () => {
 const createKnex = async () => {
     const knexClient = knex({
         client: "pg",
-        connection: {
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            database: process.env.DB_DATABASE,
-            password: process.env.DB_PWD,
-        },
+        connection: process.env.CONNECTION_STRING,
     });
 
     return knexClient;
