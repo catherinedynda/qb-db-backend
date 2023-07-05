@@ -14,6 +14,7 @@ import usersRouter from "./routes/users.js";
 import membersRouter from "./routes/members.js";
 import quoteesRouter from "./routes/quotees.js";
 import searchRouter from "./routes/search.js";
+import likesRouter from "./routes/likes.js";
 
 const app = express();
 const port = 4000;
@@ -30,6 +31,7 @@ app.use("/users", usersRouter);
 app.use("/members", membersRouter);
 app.use("/quotees", quoteesRouter);
 app.use("/search", searchRouter);
+app.use("/likes", likesRouter);
 
 app.use(express.static("/public"));
 
@@ -55,7 +57,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
+    console.log(`QB DB backend listening on port ${port}`);
 });
 
 // module.exports = app;

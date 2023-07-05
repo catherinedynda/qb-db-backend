@@ -2,7 +2,7 @@ import express from "express";
 const router = express.Router();
 import bodyParser from "body-parser";
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
-import { createClient, createKnex } from "../db.js";
+import { createKnex } from "../db.js";
 
 router.get("/", urlencodedParser, async function (req, res) {
     const knex = await createKnex();
@@ -12,7 +12,7 @@ router.get("/", urlencodedParser, async function (req, res) {
         query = query.whereILike("quote_text", `%${req.query.keyword}%`);
     }
     if (req.query.member) {
-        query = query.where("member_id", req.query.member);
+        query = query.where("Quote.member_id", req.query.member);
     }
     if (req.query.quotee) {
         query = query
@@ -36,7 +36,7 @@ router.get("/", urlencodedParser, async function (req, res) {
         "=",
         "Member.member_id"
     );
-    const quotes = await query.select().limit(10);
+    const quotes = await query.select().limit(30);
     await knex.destroy();
     res.set("Access-Control-Allow-Origin", "http://localhost:3000");
     // res.send(["heemo time"]);
