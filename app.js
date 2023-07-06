@@ -27,11 +27,11 @@ app.set("view engine", "pug");
 
 app.use("/", indexRouter);
 app.use("/nicknames", nicknamesRouter);
-app.use("/users", usersRouter);
-app.use("/members", membersRouter);
-app.use("/quotees", quoteesRouter);
-app.use("/search", searchRouter);
-app.use("/likes", likesRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/members", membersRouter);
+app.use("/api/quotees", quoteesRouter);
+app.use("/api/search", searchRouter);
+app.use("/api/likes", likesRouter);
 
 app.use(express.static("/public"));
 

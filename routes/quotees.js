@@ -8,7 +8,7 @@ router.get("/", async function (req, res) {
         'SELECT name, person_id FROM qb."Quotee"'
     );
     await client.end();
-    res.set("Access-Control-Allow-Origin", "http://localhost:3000");
+    // res.set("Access-Control-Allow-Origin", "*");
     res.send(quotees.rows);
 });
 
