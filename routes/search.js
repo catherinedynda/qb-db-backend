@@ -47,7 +47,6 @@ router.get("/", urlencodedParser, async function (req, res) {
     const quotes = await query.select().limit(30);
     await knex.destroy();
     // res.set("Access-Control-Allow-Origin", "*");
-    // res.send(["heemo time"]);
     res.send(quotes);
 });
 
