@@ -7,6 +7,9 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 import indexRouter from "./routes/index.js";
 import adminRouter from "./routes/admin.js";
@@ -25,6 +28,13 @@ app.set("views", "./views");
 app.set("view engine", "pug");
 // app.use(express.bodyParser());
 // app.use(express.json());
+
+const corsOptions = {
+    // origin: "https://qb-db-frontend-git-dev-catherinedynda.vercel.app/",
+    origin: "*",
+};
+
+app.use(cors(corsOptions));
 
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
