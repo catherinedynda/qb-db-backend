@@ -8,7 +8,7 @@ router.get("/", async function (req, res) {
         'SELECT name, member_id FROM qb."Member"'
     );
     await client.end();
-    // res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Origin", "*");
     res.send(members.rows);
 });
 
