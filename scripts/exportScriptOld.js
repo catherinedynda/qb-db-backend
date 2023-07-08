@@ -1,14 +1,14 @@
-import dotenv from 'dotenv';
-import fs from 'fs';
-import { processMessage } from './regex.js';
-import { processPerson, fixPeople } from './person.js';
-import pkg from 'pg';
-import ObjectsToCsv from 'objects-to-csv';
+import dotenv from "dotenv";
+import fs from "fs";
+import { processMessage } from "../utils/regex.js";
+import { processPerson, fixPeople } from "../utils/person.js";
+import pkg from "pg";
+import ObjectsToCsv from "objects-to-csv";
 dotenv.config();
 const { Client } = pkg;
 
 // this works if you have a data/message.json that holds all the messages from the GM export
-fs.readFile('data/message.json', async (err, data) => {
+fs.readFile("data/message.json", async (err, data) => {
     if (err) {
         console.log(err);
     } else {
@@ -27,71 +27,79 @@ fs.readFile('data/message.json', async (err, data) => {
         let quoteFirstCounter = 0;
         let noneCounter = 0;
         // const writeStreamQuotes = fs.createWriteStream('data/quotes.csv');
-        let nicknames = fs.readFileSync('data/nicknames.txt', 'utf-8').split('\n');
+        let nicknames = fs
+            .readFileSync("data/nicknames.txt", "utf-8")
+            .split("\n");
         console.log(nicknames);
-        let nicknameIds = fs.readFileSync('data/nickname_ids.txt', 'utf-8').split('\n');
-        const writeStream = fs.createWriteStream('data/nicknames.csv');
-        const writeStream2 = fs.createWriteStream('data/quote_nickname.csv');
-        const writeStreamLikes = fs.createWriteStream('data/likes.csv');
-        writeStream.write('person_id,nickname\n');
-        writeStream2.write('quote_id,nickname_id\n');
-        writeStreamLikes.write('quote_id,member_id\n');
+        let nicknameIds = fs
+            .readFileSync("data/nickname_ids.txt", "utf-8")
+            .split("\n");
+        const writeStream = fs.createWriteStream("data/nicknames.csv");
+        const writeStream2 = fs.createWriteStream("data/quote_nickname.csv");
+        const writeStreamLikes = fs.createWriteStream("data/likes.csv");
+        writeStream.write("person_id,nickname\n");
+        writeStream2.write("quote_id,nickname_id\n");
+        writeStreamLikes.write("quote_id,member_id\n");
         // personFirstReg.forEach(value => writeStream.write(`{ ${value.person} }\n`));
         // the finish event is emitted when all data has been flushed from the stream
-        writeStream.on('finish', () => {
-        console.log(`wrote all the array data to file`);
-        // client.end();
+        writeStream.on("finish", () => {
+            console.log(`wrote all the array data to file`);
+            // client.end();
         });
-        writeStreamLikes.on('finish', () => console.log('likes written'));
-        writeStreamLikes.on('error', (err) => console.log(err));
+        writeStreamLikes.on("finish", () => console.log("likes written"));
+        writeStreamLikes.on("error", (err) => console.log(err));
 
         // handle the errors on the write process
-        writeStream.on('error', (err) => {
-            console.error(`There is an error writing the file => ${err}`)
+        writeStream.on("error", (err) => {
+            console.error(`There is an error writing the file => ${err}`);
         });
         for (let i = 0; i < messageData.length; i++) {
             let processedMsg = processMessage(messageData[i]);
             if (processedMsg) {
                 let none = false;
                 processedMsg.likes.forEach((like) => {
-                    writeStreamLikes.write(`${processedMsg.quote.quote_id},${like}\n`);
-                })
+                    writeStreamLikes.write(
+                        `${processedMsg.quote.quote_id},${like}\n`
+                    );
+                });
                 // if (processedMsg.person) {
-                    // console.log(processedMsg.person);
-                    // processedMsg.person = processPerson(client, processedMsg
-                    const fixedPeople = fixPeople(processedMsg);
-                    processedMsg.person = fixedPeople;
-                    fixedPeople.forEach((person) => {
-                        // writeStream.write(`DEFAULT,null,${person}\n`);
-                        if (nicknames.indexOf(person) !== -1) {
-                            // console.log(`${person} worked`);
-                            let nicknameId = nicknameIds[nicknames.indexOf(person)];
-                            writeStream2.write(`${processedMsg.quote.quote_id},${nicknameId}\n`);
-                        } else {
-                            console.log(`ERROR nickname ${person} not found!`);
-                        }
+                // console.log(processedMsg.person);
+                // processedMsg.person = processPerson(client, processedMsg
+                const fixedPeople = fixPeople(processedMsg);
+                processedMsg.person = fixedPeople;
+                fixedPeople.forEach((person) => {
+                    // writeStream.write(`DEFAULT,null,${person}\n`);
+                    if (nicknames.indexOf(person) !== -1) {
+                        // console.log(`${person} worked`);
+                        let nicknameId = nicknameIds[nicknames.indexOf(person)];
+                        writeStream2.write(
+                            `${processedMsg.quote.quote_id},${nicknameId}\n`
+                        );
+                    } else {
+                        console.log(`ERROR nickname ${person} not found!`);
+                    }
 
-                        if (!people.includes(person)) {
-                            writeStream.write(`,${person}\n`);
-                            people.push(person);
-                        }
-                    })
-                    // processedMsg.person.forEach(async (person) => {
-                    //     // try {
-                    //     //     const res = await client.query('SELECT * FROM qb."Member"');
-                    //     //     console.log(res.rows[0]);
-                    //     // } catch (e) {
-                    //     //     console.log(e);
-                    //     // }
-                    //     try {
-                    //         const person2 = await processPerson(client, person);
-                    //     } catch (e) {
-                    //         console.log(e);
-                    //     }
-                    //     if (!people.includes(person)) {
-                    //         people.push(person);
-                    //     }
-                    // });
+                    if (!people.includes(person)) {
+                        writeStream.write(`,${person}\n`);
+                        people.push(person);
+                    }
+                });
+                // processedMsg.person.forEach(async (person) => {
+                //     // try {
+                //     //     const res = await client.query('SELECT * FROM qb."Member"');
+                //     //     console.log(res.rows[0]);
+                //     // } catch (e) {
+                //     //     console.log(e);
+                //     // }
+                //     try {
+                //         const person2 = await processPerson(client, person);
+                //     } catch (e) {
+                //         console.log(e);
+                //     }
+                //     if (!people.includes(person)) {
+                //         people.push(person);
+                //     }
+                // });
                 // }
                 if (processedMsg.pattern) {
                     switch (processedMsg.pattern) {
@@ -130,7 +138,7 @@ fs.readFile('data/message.json', async (err, data) => {
                             break;
                     }
                 }
-                let date = new Date(processedMsg.quote.time*1000);
+                let date = new Date(processedMsg.quote.time * 1000);
                 // console.log(date);
                 processedMsg.quote.time = date.toISOString();
                 if (!none) {
@@ -146,16 +154,24 @@ fs.readFile('data/message.json', async (err, data) => {
         } // end for all data
         console.log(quotes.length);
         const csv = new ObjectsToCsv(quotes);
-        await csv.toDisk('data/quotes.csv');
+        await csv.toDisk("data/quotes.csv");
         console.log(`personFirstCounter: ${personFirstCounter}`);
         console.log(`quoteFirstCounter: ${quoteFirstCounter}`);
         console.log(`noneCounter: ${noneCounter}`);
-        const quoteLists = [personFirstReg, personFirstAction, personFirstExtraSpace, personFirstHyphen, quoteFirstReg, quoteFirstTessa, quoteFirstNonHyphen];
+        const quoteLists = [
+            personFirstReg,
+            personFirstAction,
+            personFirstExtraSpace,
+            personFirstHyphen,
+            quoteFirstReg,
+            quoteFirstTessa,
+            quoteFirstNonHyphen,
+        ];
         let quotesToCompare = [];
         quoteFirstReg.forEach((quote) => {
             let text = quote.quote.quote_text;
             quotesToCompare.push(`{ ${text} }\n`);
-        })
+        });
         // quotesToCompare = JSON.stringify(quotesToCompare);
         // const writeStream = fs.createWriteStream('data/nicknames.csv');
         // people = people.sort();

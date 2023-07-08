@@ -10,7 +10,7 @@ const { Client } = pkg;
 // });
 const connectionString = process.env.CONNECTION_STRING;
 const client = new Client({ connectionString });
-import { createKnex } from "./db.js";
+import { createKnex } from "../db.js";
 
 try {
     console.log("Connecting...");

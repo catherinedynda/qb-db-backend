@@ -10,6 +10,7 @@ Setup scripts are a bit of a mess, admin app is in progress.
     -   [ ] Make it able to be optionally used?
 -   [ ] Make the API stuff
     -   [ ] Add custom column select, we really don't need all of these
+-   [ ] Make a better automated way to update stuff, just like throw a thingy at a script and it runs it? Current architecture is awful
 -   [ ] Make other admin tools? Like for checking on new quotes that have been added
     -   [ ] Check on new quotes, paginated with LIMIT and OFFSET? Or do this for any tables...?
 -   [x] Honestly switch DB provider the connections thing is annoying

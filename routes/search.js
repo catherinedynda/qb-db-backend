@@ -10,6 +10,7 @@ router.get("/", urlencodedParser, async function (req, res) {
     console.log(req.query);
     let query = knex.withSchema("qb").from("Quote");
     if (req.query.keyword) {
+        const keyword = decodeURIComponent(req.query.keyword);
         query = query.whereILike("quote_text", `%${req.query.keyword}%`);
     }
     if (req.query.member) {
@@ -31,6 +32,12 @@ router.get("/", urlencodedParser, async function (req, res) {
             )
             .where("Quotee.person_id", req.query.quotee);
     }
+    if (req.query.fromDate) {
+        query = query.where("Quote.time", ">=", req.query.fromDate);
+    }
+    if (req.query.toDate) {
+        query = query.where("Quote.time", "<=", req.query.toDate);
+    }
     query = query.innerJoin(
         "Member",
         "Quote.member_id",
@@ -39,6 +46,7 @@ router.get("/", urlencodedParser, async function (req, res) {
     );
     const quotes = await query.select().limit(30);
     await knex.destroy();
+    // res.set("Access-Control-Allow-Origin", "*");
     // res.send(["heemo time"]);
     res.send(quotes);
 });

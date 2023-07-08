@@ -1,25 +1,26 @@
 {
-  "type": "module",
-  "name": "qb-db-backend",
-  "version": "1.0.0",
-  "description": "Backend utilities for getting and adding GroupMe export data",
-  "main": "index.js",
-  "scripts": {
-    "full-export": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.20.2",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "fs": "0.0.1-security",
-    "knex": "^2.4.2",
-    "nodemon": "^2.0.22",
-    "objects-to-csv": "^1.3.6",
-    "pg": "^8.8.0",
-    "pug": "^3.0.2"
-  }
+    "type": "module",
+    "name": "qb-db-backend",
+    "version": "1.0.0",
+    "description": "Backend utilities for getting and adding GroupMe export data",
+    "main": "index.js",
+    "scripts": {
+        "full-export": "node index.js",
+        "test-db": "node utils/dbTest.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.20.2",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "fs": "0.0.1-security",
+        "knex": "^2.4.2",
+        "nodemon": "^2.0.22",
+        "objects-to-csv": "^1.3.6",
+        "pg": "^8.8.0",
+        "pug": "^3.0.2"
+    }
 }
