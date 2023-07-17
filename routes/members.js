@@ -5,10 +5,9 @@ import { createClient } from "../db.js";
 router.get("/", async function (req, res) {
     const client = await createClient();
     const members = await client.query(
-        'SELECT name, member_id FROM qb."Member"'
+        'SELECT name, member_id FROM qb."Member" ORDER BY name'
     );
     await client.end();
-    // res.set("Access-Control-Allow-Origin", "*");
     res.send(members.rows);
 });
 

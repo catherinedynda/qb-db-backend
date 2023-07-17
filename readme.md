@@ -9,10 +9,13 @@ Setup scripts are a bit of a mess, admin app is in progress.
 -   [ ] Recreate code for getting members
     -   [ ] Make it able to be optionally used?
 -   [ ] Make the API stuff
-    -   [ ] Add custom column select, we really don't need all of these
+    -   [x] Add custom column select, we really don't need all of these
 -   [ ] Make a better automated way to update stuff, just like throw a thingy at a script and it runs it? Current architecture is awful
+    -   [ ] Make sure it includes a way to update likes on old messages as well
+    -   [ ] Please just overhaul the whole thing PLEASE
 -   [ ] Make other admin tools? Like for checking on new quotes that have been added
     -   [ ] Check on new quotes, paginated with LIMIT and OFFSET? Or do this for any tables...?
+    -   [ ] Have a dumping ground for non-quote messages? Just a table with them for only the admin to access? Cause I want to check on them
 -   [x] Honestly switch DB provider the connections thing is annoying
     -   [ ] Make it not immediately die if there's too many database connections? This is untenable for more production-level stuff
     -   [ ] Have just one connection passed around instead of multiple
@@ -29,9 +32,15 @@ Setup scripts are a bit of a mess, admin app is in progress.
 
 `GET /search`: Main endpoint for searching. Returns quotes and stuff. Parameters:
 
--   `keyword`: case insensitive keyword to search for in full text of quote
+-   `keyword`: keyword to search for in full text of quote
+-   `case`: `on` to have keyword be case sensitive, `off` to have keyword be case insensitive
 -   `member`: id of member quote is from
 -   `quotee`: id of person quoted
+-   `fromDate`: farthest back date quote can be from, YYYY-MM-DD format
+-   `toDate`: most recent date quote can be from, YYYY-MM-DD format
+-   `limit`: `on` to limit amount of quotes to 30, `off` to not limit quantity of quotes (may be set automatically on)
+-   `sortby`: `date` to sort by date of quote, `likes` to sort by amount of likes
+-   `direction`: `asc` to sort ascendingly, `desc` to sort descendingly
 
 More to come. All parameters currently function on an AND basis. Deal with it.
 
@@ -59,15 +68,7 @@ Some manual work may need to be done to re-add members who have since left/been 
 
 ## Environment Variables
 
-Needed environment variables are:
-
-`DB_HOST`
-
-`DB_USER`
-
-`DB_DATABASE`
-
-`DB_PWD`
+Needed environment variable is `CONNECTION_STRING`.
 
 ## Database Structure Documentation
 
