@@ -31,7 +31,8 @@ app.set("view engine", "pug");
 
 const corsOptions = {
     // origin: "https://qb-db-frontend-git-dev-catherinedynda.vercel.app/",
-    origin: "*",
+    // origin: process.env.ALLOWED_ORIGINS,
+    origin: true,
 };
 
 app.use(cors(corsOptions));
