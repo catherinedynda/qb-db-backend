@@ -52,7 +52,7 @@ router.get("/", urlencodedParser, async function (req, res) {
     if (req.query.toDate) {
         query = query.where("Quote.time", "<=", req.query.toDate);
     }
-    if (!req.query.limit || (req.query.limit && req.query.limit === "on")) {
+    if ((req.query.limit && req.query.limit === "on")) {
         query = query.limit(30);
         console.log("query being limited");
     }
